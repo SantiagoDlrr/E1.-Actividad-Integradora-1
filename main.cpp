@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <cctype>
 
 using namespace std;
 
@@ -84,6 +85,65 @@ int analyzeTransmission(string tpath = "transmission1.txt", string mpath = "mcod
     return -1; 
 }
 
+// Parte 2: Buscar Palíndromos, saca la posición (iniciando en 1) en donde inicia y termina el código 
+pair<int, string> longestPalindrome(const string &s) {
+    int n = s.size();
+    if (n == 0) return {0, ""}; // Si la cadena está vacía, retornar vacío
+
+    int start = 0, maxLength = 1;
+
+    vector<vector<bool>> dp(n, vector<bool>(n, false));
+
+    // Todas las cadenas de un solo carácter son palíndromos
+    for (int i = 0; i < n; ++i) {
+        dp[i][i] = true;
+    }
+
+    // Verificar si hay palíndromos de longitud 2
+    for (int i = 0; i < n - 1; ++i) {
+        if (s[i] == s[i + 1]) {
+            dp[i][i + 1] = true;
+            start = i;
+            maxLength = 2;
+        }
+    }
+
+    // Verificar palíndromos de longitud mayor a 2
+    for (int length = 3; length <= n; ++length) {
+        for (int i = 0; i < n - length + 1; ++i) {
+            int j = i + length - 1;
+            if (s[i] == s[j] && dp[i + 1][j - 1]) {
+                dp[i][j] = true;
+                start = i;
+                maxLength = length;
+            }
+        }
+    }
+
+    return {start + 1, s.substr(start, maxLength)}; // Retorna posiciones 1-based y el palíndromo
+}
+
+void analyzePalindromes(const vector<string> &files) {
+    for (const string &transmissionFile : files) {
+        string transmission = readFile(transmissionFile);
+
+        // Eliminamos espacios extra entre las líneas
+        transmission.erase(remove(transmission.begin(), transmission.end(), ' '), transmission.end());
+
+        if (!transmission.empty()) {
+            pair<int, string> result = longestPalindrome(transmission);
+            int startIdx = result.first;
+            int endIdx = startIdx + result.second.size() - 1;
+
+            // Imprimir las posiciones donde empieza y termina el palíndromo más largo
+            
+            cout << startIdx << " " << endIdx << " " << result.second << endl;
+        } else {
+            cout << "Error al leer el archivo " << transmissionFile << endl;
+        }
+    }
+}
+
 // Parte 3: Encontrar el substring común más largo entre dos cadenas
 pair<int, int> longestCommonSubstring(const string &s1, const string &s2) {
     int m = s1.length(), n = s2.length();
@@ -129,6 +189,10 @@ int main() {
             }
         }
     }
+
+   // Parte 2: Encontrar el palíndromo más largo
+    cout << "Parte 2: " << endl;
+    analyzePalindromes(files);
 
     // Parte 3: Encontrar el substring común más largo entre transmission1.txt y transmission2.txt
     cout << "Parte 3:" << endl;
