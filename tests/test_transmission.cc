@@ -3,22 +3,22 @@
 
 TEST_CASE("analyzeTransmission - Parte 1") {
     // Transmission 1 and mcode 1
-    REQUIRE(analyzeTransmission("transmission1.txt", "mcode1.txt") == 1276);
+    REQUIRE(analyzeTransmission("transmission1.txt", "mcode1.txt") == "true 1276");
 
     // Transmission 1 and mcode 2
-    REQUIRE(analyzeTransmission("transmission1.txt", "mcode2.txt") == -1);
+    REQUIRE(analyzeTransmission("transmission1.txt", "mcode2.txt") == "false");
 
     // Transmission 1 and mcode 3
-    REQUIRE(analyzeTransmission("transmission1.txt", "mcode3.txt") == -1);
+    REQUIRE(analyzeTransmission("transmission1.txt", "mcode3.txt") == "false");
 
     // Transmission 2 and mcode 1
-    REQUIRE(analyzeTransmission("transmission2.txt", "mcode1.txt") == -1);
+    REQUIRE(analyzeTransmission("transmission2.txt", "mcode1.txt") == "false");
 
     // Transmission 2 and mcode 2
-    REQUIRE(analyzeTransmission("transmission2.txt", "mcode2.txt") == 1);
+    REQUIRE(analyzeTransmission("transmission2.txt", "mcode2.txt") == "true 1");
 
     // Transmission 2 and mcode 3
-    REQUIRE(analyzeTransmission("transmission2.txt", "mcode3.txt") == 1786);
+    REQUIRE(analyzeTransmission("transmission2.txt", "mcode3.txt") == "true 1786");
 }
 
 TEST_CASE("analyzePalindromes - Parte 2") {
