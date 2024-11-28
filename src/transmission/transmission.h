@@ -1,10 +1,9 @@
-#ifndef TRANSMISSION
-#define TRANSMISSION
+#ifndef TRANSMISSION_H
+#define TRANSMISSION_H
 
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <cctype>
 #include <string>
 #include <utility>
 #include <algorithm>
@@ -17,7 +16,7 @@ void printZValues(vector<int> &v);
 
 vector<int> zNaive(const string &S);
 
-int analyzeTransmission(string tpath = "transmission1.txt", string mpath = "mcode1.txt");
+int analyzeTransmission(const string &tpath, const string &mpath);
 
 pair<int, string> longestPalindrome(const string &s);
 
@@ -25,4 +24,4 @@ void analyzePalindromes(const vector<string> &files);
 
 pair<int, int> longestCommonSubstring(const string &s1, const string &s2);
 
-#endif 
+#endif
