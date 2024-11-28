@@ -1,9 +1,12 @@
+# Set the C++ standard to C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 include(Catch)
 
 add_executable("UnitTestTransmission" "test_transmission.cc")
 target_link_libraries("UnitTestTransmission" PUBLIC "LibFoo")
 target_link_libraries("UnitTestTransmission" PRIVATE Catch2::Catch2WithMain)
-
 
 if(${ENABLE_WARNINGS})
     target_set_warnings(
