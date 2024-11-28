@@ -23,54 +23,53 @@ void printZValues(vector<int> &v){
     cout << endl;
 }
 
-vector<int> zNaive(string S){
-    int n = S.length();
-    vector<int> A(n,0);
-    for(int i = 1; i<n; i++){
-        for(int j = i; j<n;j++){
-            if(S[j] == S[j-i]){
+vector<int> zNaive(const string &S) {
+    size_t n = S.length();              // Use size_t for string size
+    vector<int> A(n, 0);
+    for (size_t i = 1; i < n; i++) {    // Use size_t for loop indices
+        for (size_t j = i; j < n; j++) {
+            if (S[j] == S[j - i]) {
                 A[i]++;
-            }else
+            } else
                 break;
         }
     }
     return A;
 }
 
-int analyzeTransmission(string tpath, string mpath){
+
+int analyzeTransmission(const string &tpath, const string &mpath) {
     ifstream transmissiontxt(tpath); 
     ifstream mcodetxt(mpath); 
 
-    if(!transmissiontxt.is_open() || !mcodetxt.is_open()){
-        cout << "Failed to open one of the files" << endl; 
+    if (!transmissiontxt.is_open() || !mcodetxt.is_open()) {
+        cout << "Failed to open one of the files" << endl;
+        return -1;
     }
 
-    string tline; 
-    string transmission; 
-    while(getline(transmissiontxt, tline)){
+    string tline, transmission, mline, mcode;
+    while (getline(transmissiontxt, tline)) {
         transmission += tline + " ";
     }
-
-    string mline; 
-    string mcode; 
-    while(getline(mcodetxt, mline)){
+    while (getline(mcodetxt, mline)) {
         mcode += mline + " ";
     }
 
-    transmissiontxt.close(); 
-    mcodetxt.close(); 
+    transmissiontxt.close();
+    mcodetxt.close();
 
     string zString = mcode + "$" + transmission;
     vector<int> zValues = zNaive(zString);
 
-    for(int i = 0; i < zValues.size(); i++){
-        if(zValues[i] == mcode.length()){
-            return i - mcode.length(); 
+    for (size_t i = 0; i < zValues.size(); i++) {  // Use size_t for loop indices
+        if (zValues[i] == static_cast<int>(mcode.length())) {
+            return static_cast<int>(i - mcode.length()); // Cast to int
         }
     }
 
-    return -1; 
+    return -1;
 }
+
 
 pair<int, string> longestPalindrome(const string &s) {
     int n = s.size();

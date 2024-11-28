@@ -15,7 +15,7 @@ string readFile(const string &path);
 
 void printZValues(vector<int> &v);
 
-vector<int> zNaive(string S);
+vector<int> zNaive(const string &S);
 
 int analyzeTransmission(string tpath = "transmission1.txt", string mpath = "mcode1.txt");
 
